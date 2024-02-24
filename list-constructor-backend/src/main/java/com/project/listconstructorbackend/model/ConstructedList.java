@@ -1,31 +1,34 @@
 package com.project.listconstructorbackend.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "constructed_lists")
-public class ConstructedList {
-
-    @Id
-    @GeneratedValue
-    @Setter(AccessLevel.NONE)
-    private UUID id;
+public class ConstructedList extends BaseEntity {
 
     @NonNull
-    @Column(name = "name")
-    private String name;
-
-    @NonNull
-    @Setter(AccessLevel.NONE)
-    @Column(name = "type")
     private ConstructedListType type;
 
     @Column(name = "item_ids")
     private List<UUID> itemIds;
+
+    public ConstructedList(
+            @NonNull String name,
+            @NonNull String description,
+            @NonNull ConstructedListType type) {
+
+        super(name, description);
+        this.type = type;
+    }
 
 }
