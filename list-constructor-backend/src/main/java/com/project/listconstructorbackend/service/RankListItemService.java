@@ -4,7 +4,9 @@ import com.project.listconstructorbackend.model.RankListItem;
 import com.project.listconstructorbackend.repository.BaseRepository;
 import com.project.listconstructorbackend.repository.RankListItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RankListItemService implements ListItemService<RankListItem> {
 
     @Autowired

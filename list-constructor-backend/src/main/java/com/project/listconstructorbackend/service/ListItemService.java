@@ -8,6 +8,10 @@ import java.util.UUID;
 
 public interface ListItemService<T extends ListItemEntity> extends BaseService<T> {
 
+    default List<T> createMultiple(List<T> listItems) {
+        return getRepository().saveAll(listItems);
+    }
+
     default List<T> getByListId(UUID listId) {
         return ((ListItemRepository<T>) getRepository()).getByListId(listId);
     }
