@@ -2,6 +2,7 @@ package com.project.listconstructorbackend.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -12,7 +13,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "rank_list_items")
+@Table(name = "detail_list_items",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "listId"})})
 public class DetailListItem extends ListItemEntity {
 
     private List<String> titles;

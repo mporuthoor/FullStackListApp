@@ -3,6 +3,7 @@ package com.project.listconstructorbackend.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -13,7 +14,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "constructed_lists")
+@Table(name = "constructed_lists",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 public class ConstructedList extends BaseEntity {
 
     @NonNull
