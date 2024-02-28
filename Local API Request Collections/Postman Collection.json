@@ -206,7 +206,7 @@
             "url": "http://localhost:8080/api/v1/lists",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": 1\n}",
+              "raw": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": 0\n}",
               "options": {
                 "raw": {
                   "language": "json"
