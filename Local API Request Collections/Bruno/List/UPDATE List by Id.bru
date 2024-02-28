@@ -1,0 +1,20 @@
+meta {
+  name: UPDATE List by Id
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:8080/api/v1/lists/{id}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "List 1",
+    "description": "Constructed List Number 1",
+    "type": 1,
+    "itemIds": []
+  }
+}

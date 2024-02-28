@@ -1,0 +1,19 @@
+meta {
+  name: CREATE List
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/api/v1/lists
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "List 1",
+    "description": "Constructed List Number 1",
+    "type": 0
+  }
+}

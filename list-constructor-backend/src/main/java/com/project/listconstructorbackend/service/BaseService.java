@@ -11,10 +11,6 @@ public interface BaseService<T extends BaseEntity> {
 
     BaseRepository<T> getRepository();
 
-    default T create(T t) {
-        return getRepository().save(t);
-    }
-
     default Optional<T> get(UUID id) {
         return getRepository().findById(id);
     }
@@ -28,14 +24,6 @@ public interface BaseService<T extends BaseEntity> {
             return Optional.of(getRepository().save(t));
         }
         return Optional.empty();
-    }
-
-    default boolean delete(UUID id) {
-        if (getRepository().existsById(id)) {
-            getRepository().deleteById(id);
-            return true;
-        }
-        return false;
     }
 
 }

@@ -21,12 +21,14 @@ public class CheckListItemController {
     private CheckListItemService checkListItemService;
 
     @PostMapping
-    public CheckListItem createCheckListItem(@RequestBody CheckListItem checkListItem) {
+    public CheckListItem createCheckListItem(@RequestBody CheckListItem checkListItem)
+            throws ResourceNotFoundException {
         return checkListItemService.create(checkListItem);
     }
 
     @PostMapping("/batch")
-    public List<CheckListItem> createCheckListItems(@RequestBody List<CheckListItem> checkListItems) {
+    public List<CheckListItem> createCheckListItems(@RequestBody List<CheckListItem> checkListItems)
+            throws ResourceNotFoundException {
         return checkListItemService.createMultiple(checkListItems);
     }
 
@@ -42,7 +44,7 @@ public class CheckListItemController {
     public List<CheckListItem> getCheckListItemsByListId(@PathVariable(value = "listId") UUID listId)
             throws ResourceNotFoundException {
 
-        return checkListItemService.getByListId(listId);
+        return checkListItemService.getItemsByListId(listId);
     }
 
     @GetMapping

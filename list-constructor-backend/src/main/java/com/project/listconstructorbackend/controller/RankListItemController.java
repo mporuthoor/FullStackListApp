@@ -21,12 +21,14 @@ public class RankListItemController {
     private RankListItemService rankListItemService;
 
     @PostMapping
-    public RankListItem createRankListItem(@RequestBody RankListItem rankListItem) {
+    public RankListItem createRankListItem(@RequestBody RankListItem rankListItem)
+            throws ResourceNotFoundException {
         return rankListItemService.create(rankListItem);
     }
 
     @PostMapping("/batch")
-    public List<RankListItem> createRankListItems(@RequestBody List<RankListItem> rankListItems) {
+    public List<RankListItem> createRankListItems(@RequestBody List<RankListItem> rankListItems)
+            throws ResourceNotFoundException {
         return rankListItemService.createMultiple(rankListItems);
     }
 
@@ -42,7 +44,7 @@ public class RankListItemController {
     public List<RankListItem> getRankListItemsByListId(@PathVariable(value = "listId") UUID listId)
             throws ResourceNotFoundException {
 
-        return rankListItemService.getByListId(listId);
+        return rankListItemService.getItemsByListId(listId);
     }
 
     @GetMapping

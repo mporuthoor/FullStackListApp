@@ -1,0 +1,34 @@
+meta {
+  name: CREATE Multiple CheckListItems
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/v1/checkListItems/batch
+  body: json
+  auth: none
+}
+
+body:json {
+  [
+    {
+      "name": "Checked Item 1",
+      "description": "Check List Item 1",
+      "listId": "{listId}",
+      "checked": "FALSE"
+    },
+    {
+      "name": "Checked Item 2",
+      "description": "Check List Item 2",
+      "listId": "{listId}",
+      "checked": "FALSE"
+    },
+    {
+      "name": "Checked Item 3",
+      "description": "Check List Item 3",
+      "listId": "{listId}",
+      "checked": "TRUE"
+    }
+  ]
+}

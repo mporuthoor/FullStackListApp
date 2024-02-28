@@ -21,12 +21,14 @@ public class DetailListItemController {
     private DetailListItemService detailListItemService;
 
     @PostMapping
-    public DetailListItem createDetailListItem(@RequestBody DetailListItem detailListItem) {
+    public DetailListItem createDetailListItem(@RequestBody DetailListItem detailListItem)
+            throws ResourceNotFoundException {
         return detailListItemService.create(detailListItem);
     }
 
     @PostMapping("/batch")
-    public List<DetailListItem> createDetailListItems(@RequestBody List<DetailListItem> detailListItems) {
+    public List<DetailListItem> createDetailListItems(@RequestBody List<DetailListItem> detailListItems)
+            throws ResourceNotFoundException {
         return detailListItemService.createMultiple(detailListItems);
     }
 
@@ -42,7 +44,7 @@ public class DetailListItemController {
     public List<DetailListItem> getDetailListItemsByListId(@PathVariable(value = "listId") UUID listId)
             throws ResourceNotFoundException {
 
-        return detailListItemService.getByListId(listId);
+        return detailListItemService.getItemsByListId(listId);
     }
 
     @GetMapping

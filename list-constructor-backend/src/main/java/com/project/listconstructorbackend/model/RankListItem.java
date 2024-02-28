@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "rank_list_items",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "listId"})})
