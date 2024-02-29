@@ -20,32 +20,25 @@ import java.util.UUID;
 public class DetailListItem extends ListItemEntity {
 
     @NotNull
-    private List<String> titles;
-
-    @NotNull
-    private List<String> values;
+    private List<String> details;
 
     public DetailListItem(
             @NotNull String name,
             @NotNull UUID listId,
-            @NotNull List<String> titles,
-            @NotNull List<String> values) {
+            @NotNull List<String> details) {
 
         super(name, listId);
-        this.titles = titles;
-        this.values = values;
+        this.details = details;
     }
 
     public DetailListItem(
             @NotNull String name,
             String description,
             @NotNull UUID listId,
-            @NotNull List<String> titles,
-            @NotNull List<String> values) {
+            @NotNull List<String> details) {
 
         super(name, description, listId);
-        this.titles = titles;
-        this.values = values;
+        this.details = details;
     }
 
 }

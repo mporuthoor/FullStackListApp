@@ -88,7 +88,7 @@
             "url": "http://localhost:8080/api/v1/checkListItems/{id}",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Checked Item 1\",\n  \"description\": \"Check List Item 1\",\n  \"listId\": \"{listId}\",\n  \"checked\": \"FALSE\"\n}",
+              "raw": "{\n  \"name\": \"Checked Item 1\",\n  \"description\": \"Check List Item 1\",\n  \"checked\": \"FALSE\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -111,7 +111,7 @@
             "url": "http://localhost:8080/api/v1/detailListItems",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Detail List Item 1\",\n  \"description\": \"Detail List Item 1\",\n  \"listId\": \"{listId}\",\n  \"titles\": [\"Title1\", \"Title2\"],\n  \"values\": [\"Value1\", \"Value2\"]\n}",
+              "raw": "{\n  \"name\": \"Detail List Item 1\",\n  \"description\": \"Detail List Item 1\",\n  \"listId\": \"{listId}\",\n  \"details\": [\"Detail1\", \"Detail2\"]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -129,7 +129,7 @@
             "url": "http://localhost:8080/api/v1/detailListItems/batch",
             "body": {
               "mode": "raw",
-              "raw": "[\n  {\n    \"name\": \"Detail Item 1\",\n    \"description\": \"Detail List Item 1\",\n    \"listId\": \"{listId}\",\n    \"titles\": [\"Title1\"],\n    \"values\": [\"Value1\"]\n  },\n  {\n    \"name\": \"Detail Item 2\",\n    \"description\": \"Detail List Item 2\",\n    \"listId\": \"{listId}\",\n    \"titles\": [\"Title1\", \"Title2\", \"Title3\"],\n    \"values\": [\"Value1\", \"Value2\", \"Value3\"]\n  },\n  {\n    \"name\": \"Detail Item 3\",\n    \"description\": \"Detail List Item 3\",\n    \"listId\": \"{listId}\",\n    \"titles\": [\"Title1\", \"Title2\"],\n    \"values\": [\"Value1\", \"Value2\"]\n  }\n]",
+              "raw": "[\n  {\n    \"name\": \"Title Item {listId}\",\n    \"description\": \"Title Item for Detail List {listId}\",\n    \"listId\": \"{listId}\",\n    \"details\": [\"Title1\", \"Title2\"]\n  },\n  {\n    \"name\": \"Detail Item 1\",\n    \"description\": \"Detail List Item 1\",\n    \"listId\": \"{listId}\",\n    \"details\": [\"Detail1\", \"Detail2\"]\n  },\n  {\n    \"name\": \"Detail Item 2\",\n    \"description\": \"Detail List Item 2\",\n    \"listId\": \"{listId}\",\n    \"details\": [\"Detail1\", \"Detail2\"]\n  }\n]",
               "options": {
                 "raw": {
                   "language": "json"
@@ -183,75 +183,7 @@
             "url": "http://localhost:8080/api/v1/detailListItems/{id}",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Detail List Item 1\",\n  \"description\": \"Detail List Item 1\",\n  \"listId\": \"{listId}\",\n  \"titles\": [\"Title1\", \"Title2\", \"Title3\"],\n  \"values\": [\"Value1\", \"Value2\", \"Value3\"]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "List",
-      "item": [
-        {
-          "name": "CREATE List",
-          "event": [],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": "http://localhost:8080/api/v1/lists",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": 0\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "DELETE List by Id",
-          "event": [],
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": "http://localhost:8080/api/v1/lists/{id}"
-          }
-        },
-        {
-          "name": "GET All Lists",
-          "event": [],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "http://localhost:8080/api/v1/lists"
-          }
-        },
-        {
-          "name": "GET List by Id",
-          "event": [],
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": "http://localhost:8080/api/v1/lists/{id}"
-          }
-        },
-        {
-          "name": "UPDATE List by Id",
-          "event": [],
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "url": "http://localhost:8080/api/v1/lists/{id}",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": 1,\n  \"itemIds\": []\n}",
+              "raw": "{\n  \"name\": \"Detail List Item 1\",\n  \"description\": \"Detail List Item 1\",\n  \"details\": [\"Detail1\", \"Detail2\", \"Details3\"]\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -346,7 +278,75 @@
             "url": "http://localhost:8080/api/v1/rankListItems/{id}",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Rank Item 1\",\n  \"description\": \"Rank List Item 1\",\n  \"listId\": \"{listId}\",\n  \"rank\": 2\n}",
+              "raw": "{\n  \"name\": \"Rank Item 1\",\n  \"description\": \"Rank List Item 1\",\n  \"rank\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "List",
+      "item": [
+        {
+          "name": "CREATE List",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "http://localhost:8080/api/v1/lists",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": \"CHECK\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE List by Id",
+          "event": [],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "http://localhost:8080/api/v1/lists/{id}"
+          }
+        },
+        {
+          "name": "GET All Lists",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/api/v1/lists"
+          }
+        },
+        {
+          "name": "GET List by Id",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/api/v1/lists/{id}"
+          }
+        },
+        {
+          "name": "UPDATE List by Id",
+          "event": [],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "http://localhost:8080/api/v1/lists/{id}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": \"DETAIL\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
