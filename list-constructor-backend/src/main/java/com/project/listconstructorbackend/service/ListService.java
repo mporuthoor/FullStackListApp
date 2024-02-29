@@ -28,8 +28,20 @@ public class ListService implements BaseService<ConstructedList> {
         return listRepository;
     }
 
-    public ConstructedList create(ConstructedList constructedList) {
-        return getRepository().save(constructedList);
+    public ConstructedList create(ConstructedList list) {
+        return getRepository().save(list);
+    }
+
+    public Optional<ConstructedList> update(ConstructedList list) {
+        Optional<ConstructedList> savedList = getRepository().findById(list.getId());
+
+        // only update saved name and description
+        return savedList.map(constructedList -> {
+            constructedList.setName(list.getName());
+            constructedList.setDescription(list.getDescription());
+
+            return getRepository().save(constructedList);
+        });
     }
 
     public boolean delete(UUID id) {

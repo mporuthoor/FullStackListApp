@@ -3,14 +3,16 @@ package com.project.listconstructorbackend.model;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @MappedSuperclass
 public class BaseEntity {
 
@@ -18,10 +20,18 @@ public class BaseEntity {
     @GeneratedValue
     private UUID id;
 
-    @NonNull
+    @NotNull
     private String name;
 
-    @NonNull
     private String description;
+
+    public BaseEntity(@NotNull String name) {
+        this.name = name;
+    }
+
+    public BaseEntity(@NotNull String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
 }

@@ -19,11 +19,4 @@ public interface BaseService<T extends BaseEntity> {
         return getRepository().findAll();
     }
 
-    default Optional<T> update(T t) {
-        if (getRepository().existsById(t.getId())) {
-            return Optional.of(getRepository().save(t));
-        }
-        return Optional.empty();
-    }
-
 }

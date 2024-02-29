@@ -2,9 +2,9 @@ package com.project.listconstructorbackend.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.UUID;
@@ -15,15 +15,17 @@ import java.util.UUID;
 @MappedSuperclass
 public class ListItemEntity extends BaseEntity {
 
-    @NonNull
+    // should not be changed once set
+    @NotNull
     @Column(name = "list_id")
     private UUID listId;
 
-    public ListItemEntity(
-            @NonNull String name,
-            @NonNull String description,
-            @NonNull UUID listId) {
+    public ListItemEntity(@NotNull String name, @NotNull UUID listId) {
+        super(name);
+        this.listId = listId;
+    }
 
+    public ListItemEntity(@NotNull String name, String description, @NotNull UUID listId) {
         super(name, description);
         this.listId = listId;
     }

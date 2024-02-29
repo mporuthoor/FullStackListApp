@@ -16,6 +16,7 @@ import java.util.UUID;
 public class ListController {
 
     private static final String LIST_NOT_FOUND_ID = "List not found for id: ";
+    private static final String LIST_DELETED_ID = "List successfully deleted by id: ";
 
     @Autowired
     private ListService listService;
@@ -44,20 +45,18 @@ public class ListController {
             @Valid @RequestBody ConstructedList list
     ) throws ResourceNotFoundException {
 
-        if (list.getId() == null) {
-            list.setId(id);
-        }
+        list.setId(id);
 
         return this.listService.update(list).map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException(LIST_NOT_FOUND_ID + id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteList(@PathVariable(value = "id") UUID id)
+    public ResponseEntity<String> deleteList(@PathVariable(value = "id") UUID id)
             throws ResourceNotFoundException {
 
         if (this.listService.delete(id)) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(LIST_DELETED_ID + id);
         }
 
         throw new ResourceNotFoundException(LIST_NOT_FOUND_ID + id);

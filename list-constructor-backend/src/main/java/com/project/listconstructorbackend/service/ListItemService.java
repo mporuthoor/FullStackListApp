@@ -1,5 +1,6 @@
 package com.project.listconstructorbackend.service;
 
+import com.project.listconstructorbackend.exception.InvalidPayloadException;
 import com.project.listconstructorbackend.exception.ResourceNotFoundException;
 import com.project.listconstructorbackend.model.ConstructedList;
 import com.project.listconstructorbackend.model.ListItemEntity;
@@ -14,11 +15,16 @@ import java.util.UUID;
 public interface ListItemService<T extends ListItemEntity> extends BaseService<T> {
 
     static final String CANNOT_CREATE_LIST_NOT_FOUND = "Item can't be created because list was not found for id: ";
+    static final String LIST_ID_NULL = "List id can't be null when creating list items";
 
     ListRepository getListRepository();
 
     default T create(T listItem) throws ResourceNotFoundException {
         UUID listId = listItem.getListId();
+        if (listId == null) {
+            throw new InvalidPayloadException(LIST_ID_NULL);
+        }
+
         ConstructedList list = getListRepository().findById(listId)
                 .orElseThrow(() -> new ResourceNotFoundException(CANNOT_CREATE_LIST_NOT_FOUND + listId));
 
@@ -56,6 +62,17 @@ public interface ListItemService<T extends ListItemEntity> extends BaseService<T
         return ((ListItemRepository<T>) getRepository()).getItemsByListId(listId);
     }
 
+    default Optional<T> update(T listItem) {
+        Optional<T> savedItem = getRepository().findById(listItem.getId());
+
+        // don't update saved ids
+        return savedItem.map(item -> {
+            listItem.setListId(item.getListId());
+
+            return getRepository().save(listItem);
+        });
+    }
+
     default boolean delete(UUID id) {
         Optional<T> listItem = getRepository().findById(id);
         if (listItem.isEmpty()) {
@@ -70,10 +87,6 @@ public interface ListItemService<T extends ListItemEntity> extends BaseService<T
         }
 
         return true;
-    }
-
-    default void deleteMultiple(List<UUID> itemIds) {
-        getRepository().deleteAllById(itemIds);
     }
 
 }

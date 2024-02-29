@@ -4,9 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -21,17 +21,20 @@ import java.util.UUID;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 public class ConstructedList extends BaseEntity {
 
-    @NonNull
+    // should not be changed once set
+    @NotNull
     private ConstructedListType type;
 
+    // all updates to item ids should be handled by list item services
     @Column(name = "item_ids")
     private List<UUID> itemIds = new ArrayList<>();
 
-    public ConstructedList(
-            @NonNull String name,
-            @NonNull String description,
-            @NonNull ConstructedListType type) {
+    public ConstructedList(@NotNull String name, @NotNull ConstructedListType type) {
+        super(name);
+        this.type = type;
+    }
 
+    public ConstructedList(@NotNull String name, String description, @NotNull ConstructedListType type) {
         super(name, description);
         this.type = type;
     }

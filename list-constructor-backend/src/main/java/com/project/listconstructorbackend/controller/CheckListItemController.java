@@ -16,6 +16,7 @@ import java.util.UUID;
 public class CheckListItemController {
 
     private static final String CHECK_LIST_ITEM_NOT_FOUND_ID = "Check list item not found for id: ";
+    private static final String CHECK_LIST_ITEM_DELETED_ID = "Check list item successfully deleted by id: ";
 
     @Autowired
     private CheckListItemService checkListItemService;
@@ -43,7 +44,6 @@ public class CheckListItemController {
     @GetMapping("/list/{listId}")
     public List<CheckListItem> getCheckListItemsByListId(@PathVariable(value = "listId") UUID listId)
             throws ResourceNotFoundException {
-
         return checkListItemService.getItemsByListId(listId);
     }
 
@@ -58,20 +58,18 @@ public class CheckListItemController {
             @Valid @RequestBody CheckListItem checkListItem
     ) throws ResourceNotFoundException {
 
-        if (checkListItem.getId() == null) {
-            checkListItem.setId(id);
-        }
+        checkListItem.setId(id);
 
         return checkListItemService.update(checkListItem).map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException(CHECK_LIST_ITEM_NOT_FOUND_ID + id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCheckListItem(@PathVariable(value = "id") UUID id)
+    public ResponseEntity<String> deleteCheckListItem(@PathVariable(value = "id") UUID id)
             throws ResourceNotFoundException {
 
         if (checkListItemService.delete(id)) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(CHECK_LIST_ITEM_DELETED_ID + id);
         }
 
         throw new ResourceNotFoundException(CHECK_LIST_ITEM_NOT_FOUND_ID + id);

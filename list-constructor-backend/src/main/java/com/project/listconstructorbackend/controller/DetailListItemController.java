@@ -16,6 +16,7 @@ import java.util.UUID;
 public class DetailListItemController {
 
     private static final String DETAIL_LIST_ITEM_NOT_FOUND_ID = "Detail list item not found for id: ";
+    private static final String DETAIL_LIST_ITEM_DELETED_ID = "Detail list item successfully deleted by id: ";
 
     @Autowired
     private DetailListItemService detailListItemService;
@@ -43,7 +44,6 @@ public class DetailListItemController {
     @GetMapping("/list/{listId}")
     public List<DetailListItem> getDetailListItemsByListId(@PathVariable(value = "listId") UUID listId)
             throws ResourceNotFoundException {
-
         return detailListItemService.getItemsByListId(listId);
     }
 
@@ -58,20 +58,18 @@ public class DetailListItemController {
             @Valid @RequestBody DetailListItem detailListItem
     ) throws ResourceNotFoundException {
 
-        if (detailListItem.getId() == null) {
-            detailListItem.setId(id);
-        }
+        detailListItem.setId(id);
 
         return detailListItemService.update(detailListItem).map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException(DETAIL_LIST_ITEM_NOT_FOUND_ID + id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDetailListItem(@PathVariable(value = "id") UUID id)
+    public ResponseEntity<String> deleteDetailListItem(@PathVariable(value = "id") UUID id)
             throws ResourceNotFoundException {
 
         if (detailListItemService.delete(id)) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(DETAIL_LIST_ITEM_DELETED_ID + id);
         }
 
         throw new ResourceNotFoundException(DETAIL_LIST_ITEM_NOT_FOUND_ID + id);

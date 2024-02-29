@@ -3,9 +3,9 @@ package com.project.listconstructorbackend.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.List;
@@ -19,16 +19,29 @@ import java.util.UUID;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "listId"})})
 public class DetailListItem extends ListItemEntity {
 
+    @NotNull
     private List<String> titles;
 
+    @NotNull
     private List<String> values;
 
     public DetailListItem(
-            @NonNull String name,
-            @NonNull String description,
-            @NonNull UUID listId,
-            List<String> titles,
-            List<String> values) {
+            @NotNull String name,
+            @NotNull UUID listId,
+            @NotNull List<String> titles,
+            @NotNull List<String> values) {
+
+        super(name, listId);
+        this.titles = titles;
+        this.values = values;
+    }
+
+    public DetailListItem(
+            @NotNull String name,
+            String description,
+            @NotNull UUID listId,
+            @NotNull List<String> titles,
+            @NotNull List<String> values) {
 
         super(name, description, listId);
         this.titles = titles;
