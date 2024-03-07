@@ -1,13 +1,15 @@
 package com.project.listconstructorbackend;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import io.cucumber.junit.platform.engine.Constants;
+import org.junit.platform.suite.api.ConfigurationParameter;
+import org.junit.platform.suite.api.SelectClasspathResource;
+import org.junit.platform.suite.api.Suite;
 
-@SpringBootTest
+@Suite
+@SelectClasspathResource("features")
+@ConfigurationParameter(
+		key = Constants.GLUE_PROPERTY_NAME,
+		value = "com.project.listconstructorbackend.steps")
 class ListConstructorBackendApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
 
 }

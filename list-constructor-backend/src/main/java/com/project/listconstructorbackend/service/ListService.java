@@ -32,6 +32,10 @@ public class ListService implements BaseService<ConstructedList> {
         return getRepository().save(list);
     }
 
+    public Optional<ConstructedList> getByName(String name) {
+        return ((ListRepository) getRepository()).findListByName(name);
+    }
+
     public Optional<ConstructedList> update(ConstructedList list) {
         Optional<ConstructedList> savedList = getRepository().findById(list.getId());
 
@@ -45,7 +49,7 @@ public class ListService implements BaseService<ConstructedList> {
     }
 
     public boolean delete(UUID id) {
-        Optional<ConstructedList> constructedList = get(id);
+        Optional<ConstructedList> constructedList = getById(id);
 
         if (constructedList.isPresent()) {
             List<UUID> itemIds = constructedList.get().getItemIds();

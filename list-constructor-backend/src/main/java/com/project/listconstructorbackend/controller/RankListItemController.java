@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/rankListItems")
 public class RankListItemController {
 
-    private static final String RANK_LIST_ITEM_NOT_FOUND_ID = "Rank list item not found for id: ";
+    private static final String RANK_LIST_ITEM_NOT_FOUND_ID = "Rank list item not found with id: ";
     private static final String RANK_LIST_ITEM_DELETED_ID = "Rank list item successfully deleted by id: ";
 
     @Autowired
@@ -37,7 +37,7 @@ public class RankListItemController {
     public ResponseEntity<RankListItem> getRankListItem(@PathVariable(value = "id") UUID id)
             throws ResourceNotFoundException {
 
-        return rankListItemService.get(id).map(ResponseEntity::ok)
+        return rankListItemService.getById(id).map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException(RANK_LIST_ITEM_NOT_FOUND_ID + id));
     }
 
@@ -48,7 +48,7 @@ public class RankListItemController {
         return rankListItemService.getItemsByListId(listId);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<RankListItem> getAllRankListItems() {
         return rankListItemService.getAll();
     }

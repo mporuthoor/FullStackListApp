@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/detailListItems")
 public class DetailListItemController {
 
-    private static final String DETAIL_LIST_ITEM_NOT_FOUND_ID = "Detail list item not found for id: ";
+    private static final String DETAIL_LIST_ITEM_NOT_FOUND_ID = "Detail list item not found with id: ";
     private static final String DETAIL_LIST_ITEM_DELETED_ID = "Detail list item successfully deleted by id: ";
 
     @Autowired
@@ -37,7 +37,7 @@ public class DetailListItemController {
     public ResponseEntity<DetailListItem> getDetailListItem(@PathVariable(value = "id") UUID id)
             throws ResourceNotFoundException {
 
-        return detailListItemService.get(id).map(ResponseEntity::ok)
+        return detailListItemService.getById(id).map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException(DETAIL_LIST_ITEM_NOT_FOUND_ID + id));
     }
 
@@ -47,7 +47,7 @@ public class DetailListItemController {
         return detailListItemService.getItemsByListId(listId);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<DetailListItem> getAllDetailListItems() {
         return detailListItemService.getAll();
     }

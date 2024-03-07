@@ -11,7 +11,7 @@ public interface BaseService<T extends BaseEntity> {
 
     BaseRepository<T> getRepository();
 
-    default Optional<T> get(UUID id) {
+    default Optional<T> getById(UUID id) {
         return getRepository().findById(id);
     }
 

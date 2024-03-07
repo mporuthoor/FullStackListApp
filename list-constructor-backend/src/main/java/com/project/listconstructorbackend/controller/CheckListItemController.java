@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/checkListItems")
 public class CheckListItemController {
 
-    private static final String CHECK_LIST_ITEM_NOT_FOUND_ID = "Check list item not found for id: ";
+    private static final String CHECK_LIST_ITEM_NOT_FOUND_ID = "Check list item not found with id: ";
     private static final String CHECK_LIST_ITEM_DELETED_ID = "Check list item successfully deleted by id: ";
 
     @Autowired
@@ -37,7 +37,7 @@ public class CheckListItemController {
     public ResponseEntity<CheckListItem> getCheckListItem(@PathVariable(value = "id") UUID id)
             throws ResourceNotFoundException {
 
-        return checkListItemService.get(id).map(ResponseEntity::ok)
+        return checkListItemService.getById(id).map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException(CHECK_LIST_ITEM_NOT_FOUND_ID + id));
     }
 
@@ -47,7 +47,7 @@ public class CheckListItemController {
         return checkListItemService.getItemsByListId(listId);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<CheckListItem> getAllCheckListItems() {
         return checkListItemService.getAll();
     }

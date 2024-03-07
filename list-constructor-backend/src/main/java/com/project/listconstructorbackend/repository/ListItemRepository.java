@@ -12,6 +12,6 @@ import java.util.UUID;
 public interface ListItemRepository<T extends ListItemEntity> extends BaseRepository<T>{
 
     @Query("SELECT t FROM #{#entityName} t WHERE t.listId =:listId")
-    List<T> getItemsByListId(@Param("listId") UUID listId);
+    List<T> findItemsByListId(@Param("listId") UUID listId);
 
 }

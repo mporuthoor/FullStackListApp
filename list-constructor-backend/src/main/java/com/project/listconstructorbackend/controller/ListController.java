@@ -15,7 +15,8 @@ import java.util.UUID;
 @RequestMapping("/api/v1/lists")
 public class ListController {
 
-    private static final String LIST_NOT_FOUND_ID = "List not found for id: ";
+    private static final String LIST_NOT_FOUND_NAME = "List not found with name: ";
+    private static final String LIST_NOT_FOUND_ID = "List not found with id: ";
     private static final String LIST_DELETED_ID = "List successfully deleted by id: ";
 
     @Autowired
@@ -26,15 +27,23 @@ public class ListController {
         return this.listService.create(list);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ConstructedList> getList(@PathVariable(value = "id") UUID id)
+    @GetMapping
+    public ResponseEntity<ConstructedList> getListByName(@RequestParam String name)
             throws ResourceNotFoundException {
 
-        return listService.get(id).map(ResponseEntity::ok)
+        return listService.getByName(name).map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException(LIST_NOT_FOUND_NAME + name));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ConstructedList> getListById(@PathVariable(value = "id") UUID id)
+            throws ResourceNotFoundException {
+
+        return listService.getById(id).map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException(LIST_NOT_FOUND_ID + id));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<ConstructedList> getAllLists() {
         return this.listService.getAll();
     }
