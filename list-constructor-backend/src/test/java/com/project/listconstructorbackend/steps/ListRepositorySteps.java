@@ -4,7 +4,6 @@ import com.project.listconstructorbackend.model.ConstructedList;
 import com.project.listconstructorbackend.model.ConstructedListType;
 import com.project.listconstructorbackend.repository.ListRepository;
 import io.cucumber.java.DataTableType;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +21,10 @@ public class ListRepositorySteps {
 
     @DataTableType
     public ConstructedList listEntry(Map<String, String> entry) {
-        return new ConstructedList(
-                entry.get("name"),
-                entry.get("description"),
-                ConstructedListType.valueOf(entry.get("type")));
+        String typeString = entry.get("type");
+        ConstructedListType type = (typeString == null) ? null : ConstructedListType.valueOf(typeString);
+
+        return new ConstructedList(entry.get("name"), entry.get("description"), type);
     }
 
     @Given("lists exist with the following details")
@@ -67,35 +66,9 @@ public class ListRepositorySteps {
         assertTrue(savedList.isEmpty());
     }
 
-    @And("I should purge the test lists from the database")
+    @Then("I should purge the test lists from the database")
     public void deleteListsByIds() {
         listRepository.deleteAllById(testIdsToPurge);
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
