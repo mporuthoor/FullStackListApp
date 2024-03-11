@@ -2,12 +2,15 @@ package com.project.listconstructorbackend.steps;
 
 import com.project.listconstructorbackend.client.RestClient;
 import com.project.listconstructorbackend.exception.DetailedErrorInfo;
+import com.project.listconstructorbackend.steps.common.CommonUtility;
+import com.project.listconstructorbackend.steps.common.EntityValidator;
 import io.cucumber.java.DataTableType;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,42 +24,55 @@ public class ErrorSteps {
 
     @DataTableType
     public DetailedErrorInfo detailedErrorInfoEntry(Map<String, String> entry) {
+        List<String> details = entry.get("messageDetails") == null
+                ? null
+                : Arrays.asList(entry.get("messageDetails").split(", "));
+
         return new DetailedErrorInfo(
                 entry.get("message"),
-                entry.get("messageDetails"),
-                Arrays.asList(entry.get("messageDetails").split(", ")));
+                entry.get("requestDetails"),
+                details);
     }
 
-    @When("I get a randomly generated id")
+    @Given("I get a randomly generated id")
     public void getRandomId() {
         restClient.setId(UUID.randomUUID());
     }
 
+    @Given("I have no list id")
+    public void clearListId() {
+        restClient.setListId(null);
+    }
+
+    @Given("I get a randomly generated list id")
+    public void getRandomListId() {
+        restClient.setListId(UUID.randomUUID());
+    }
+
     @Then("I should get no error")
-    public void shouldGetNoError(){
+    public void shouldGetNoError() {
         assertEquals(200, restClient.getResponse().getStatusCode());
     }
 
     @Then("I should get a bad request error with the following message and message details")
     public void shouldGetBadRequestWithMessageAndDetails(DetailedErrorInfo errorInfo) {
-        assertEquals(400, restClient.getResponse().getStatusCode());
         EntityValidator.validateDetailedErrorData(errorInfo, restClient.getResponse());
-    }
-
-    @Then("I should get a resource not found by name error")
-    public void shouldGetResourceNotFoundByName() {
-        String message = restClient.getResponse().body().jsonPath().get("message");
-
-        assertEquals(404, restClient.getResponse().getStatusCode());
-        assertTrue(message.contains("not found with name: " + restClient.getName()));
     }
 
     @Then("I should get a resource not found by id error")
     public void shouldGetResourceNotFoundById() {
-        String message = restClient.getResponse().body().jsonPath().get("message");
+        String message = CommonUtility.getErrorMessage(restClient.getResponse());
 
         assertEquals(404, restClient.getResponse().getStatusCode());
         assertTrue(message.contains("not found with id: " + restClient.getId()));
+    }
+
+    @Then("I should get a resource not found by list id error")
+    public void shouldGetResourceNotFoundByListId() {
+        String message = CommonUtility.getErrorMessage(restClient.getResponse());
+
+        assertEquals(404, restClient.getResponse().getStatusCode());
+        assertTrue(message.contains("not found with id: " + restClient.getListId()));
     }
 
 }

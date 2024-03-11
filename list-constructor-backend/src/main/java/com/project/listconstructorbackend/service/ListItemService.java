@@ -14,7 +14,8 @@ import java.util.UUID;
 
 public interface ListItemService<T extends ListItemEntity> extends BaseService<T> {
 
-    String CANNOT_CREATE_LIST_NOT_FOUND = "Item can't be created because list was not found for id: ";
+    String CANNOT_CREATE_LIST_NOT_FOUND = "Item can't be created because list was not found with id: ";
+    String CANNOT_GET_ITEMS_LIST_NOT_FOUND = "Items can't be retrieved because list was not found with id: ";
     String LIST_ID_NULL = "List id can't be null when creating list items";
 
     ListRepository getListRepository();
@@ -39,7 +40,9 @@ public interface ListItemService<T extends ListItemEntity> extends BaseService<T
         HashMap<UUID, ConstructedList> idToListMap = new HashMap<>();
         for (T listItem: listItems) {
             UUID listId = listItem.getListId();
-            if (idToListMap.containsKey(listId)) {
+            if (listId == null) {
+                throw new InvalidPayloadException(LIST_ID_NULL);
+            } else if (idToListMap.containsKey(listId)) {
                 continue;
             }
 
@@ -59,6 +62,9 @@ public interface ListItemService<T extends ListItemEntity> extends BaseService<T
     }
 
     default List<T> getItemsByListId(UUID listId) {
+        getListRepository().findById(listId)
+                .orElseThrow(() -> new ResourceNotFoundException(CANNOT_GET_ITEMS_LIST_NOT_FOUND + listId));
+
         return ((ListItemRepository<T>) getRepository()).findItemsByListId(listId);
     }
 

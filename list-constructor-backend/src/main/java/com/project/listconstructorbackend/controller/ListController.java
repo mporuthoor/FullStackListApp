@@ -15,7 +15,6 @@ import java.util.UUID;
 @RequestMapping("/api/v1/lists")
 public class ListController {
 
-    private static final String LIST_NOT_FOUND_NAME = "List not found with name: ";
     private static final String LIST_NOT_FOUND_ID = "List not found with id: ";
     private static final String LIST_DELETED_ID = "List successfully deleted by id: ";
 
@@ -25,14 +24,6 @@ public class ListController {
     @PostMapping
     public ConstructedList createList(@RequestBody ConstructedList list) {
         return this.listService.create(list);
-    }
-
-    @GetMapping
-    public ResponseEntity<ConstructedList> getListByName(@RequestParam String name)
-            throws ResourceNotFoundException {
-
-        return listService.getByName(name).map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResourceNotFoundException(LIST_NOT_FOUND_NAME + name));
     }
 
     @GetMapping("/{id}")

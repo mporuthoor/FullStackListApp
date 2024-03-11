@@ -32,10 +32,6 @@ public class ListService implements BaseService<ConstructedList> {
         return getRepository().save(list);
     }
 
-    public Optional<ConstructedList> getByName(String name) {
-        return ((ListRepository) getRepository()).findListByName(name);
-    }
-
     public Optional<ConstructedList> update(ConstructedList list) {
         Optional<ConstructedList> savedList = getRepository().findById(list.getId());
 

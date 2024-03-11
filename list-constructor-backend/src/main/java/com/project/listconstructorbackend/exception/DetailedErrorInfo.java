@@ -13,4 +13,5 @@ public class DetailedErrorInfo extends ErrorInfo{
         super(message, requestDetails);
         this.messageDetails = messageDetails;
     }
+
 }

@@ -1,74 +1,55 @@
 package com.project.listconstructorbackend.steps;
 
+import com.project.listconstructorbackend.client.RestClient;
 import com.project.listconstructorbackend.model.ConstructedList;
-import com.project.listconstructorbackend.model.ConstructedListType;
 import com.project.listconstructorbackend.repository.ListRepository;
-import io.cucumber.java.DataTableType;
+import com.project.listconstructorbackend.steps.common.CommonRepositoryHelper;
+import com.project.listconstructorbackend.steps.common.EntityValidator;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import lombok.RequiredArgsConstructor;
 
-import java.util.*;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-@RequiredArgsConstructor
 public class ListRepositorySteps {
+    private final CommonRepositoryHelper<ConstructedList> helper;
 
-    private final ListRepository listRepository;
-
-    private List<UUID> testIdsToPurge;
-
-    @DataTableType
-    public ConstructedList listEntry(Map<String, String> entry) {
-        String typeString = entry.get("type");
-        ConstructedListType type = (typeString == null) ? null : ConstructedListType.valueOf(typeString);
-
-        return new ConstructedList(entry.get("name"), entry.get("description"), type);
-    }
-
-    @Given("lists exist with the following details")
-    public void listsExistWithDetails(List<ConstructedList> lists) {
-        for (ConstructedList list: lists) {
-            noListExistsWithName(list.getName());
-        }
-
-        List<ConstructedList> savedLists = listRepository.saveAll(lists);
-        testIdsToPurge = savedLists.stream().map(ConstructedList::getId).toList();
+    public ListRepositorySteps(ListRepository repository, RestClient client) {
+        helper = new CommonRepositoryHelper<>(repository, client);
     }
 
     @Given("no list exists with name {string}")
     public void noListExistsWithName(String name) {
-        Optional<ConstructedList> list = listRepository.findListByName(name);
+        helper.noEntityExistsWithName(name);
+    }
 
-        list.ifPresent(constructedList -> listRepository.deleteById(constructedList.getId()));
+    @Given("a list exists with the following details and I get its id")
+    public void createListWithDetailsAndGetListId(ConstructedList list) {
+        helper.createListWithDetailsAndGetListId(list);
+    }
+
+    @Given("the list is currently of size {int}")
+    public void listIsOfSize(int size) {
+        helper.listIsOfSize(size);
+    }
+
+    @Given("lists exist with the following details")
+    public void listsExistWithDetails(List<ConstructedList> lists) {
+        helper.listsExistWithDetails(lists);
     }
 
     @Then("lists should exist with the following details")
-    public void listShouldExistWithName(List<ConstructedList> lists) {
-        List<UUID> newIdsToPurge = new ArrayList<>();
-
-        for (ConstructedList expected: lists) {
-            Optional<ConstructedList> savedList = listRepository.findListByName(expected.getName());
-            assertTrue(savedList.isPresent());
-
-            ConstructedList actual = savedList.get();
-            EntityValidator.validateList(expected, actual);
-            newIdsToPurge.add(actual.getId());
-        }
-
-        testIdsToPurge = newIdsToPurge;
+    public void listsShouldExistWithDetails(List<ConstructedList> expectedLists) {
+        helper.entitiesShouldExistWithDetails(expectedLists, EntityValidator::validateList);
     }
 
     @Then("no list should exist with name {string}")
     public void listShouldNotExistWithName(String name) {
-        Optional<ConstructedList> savedList = listRepository.findListByName(name);
-        assertTrue(savedList.isEmpty());
+        helper.entityShouldNotExistWithName(name);
     }
 
     @Then("I should purge the test lists from the database")
     public void deleteListsByIds() {
-        listRepository.deleteAllById(testIdsToPurge);
+        helper.deleteEntitiesByIds();
     }
 
 }
