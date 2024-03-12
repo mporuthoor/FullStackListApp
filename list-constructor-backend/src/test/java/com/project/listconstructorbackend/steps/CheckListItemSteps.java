@@ -25,7 +25,7 @@ public class CheckListItemSteps {
                 entry.get("name"),
                 entry.get("description"),
                 restClient.getListId(),
-                Boolean.getBoolean(entry.get("checked")));
+                Boolean.parseBoolean(entry.get("checked")));
     }
 
     @When("I create a check list item with that list id and the following details")
@@ -90,4 +90,5 @@ public class CheckListItemSteps {
 
         EntityValidator.validateEntityLists(expectedList, actualList, EntityValidator::validateCheckListItem);
     }
+
 }
