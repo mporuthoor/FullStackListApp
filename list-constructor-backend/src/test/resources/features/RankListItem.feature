@@ -1,4 +1,3 @@
-@bruh
 Feature: Rank List Item API CRUD Operations
 
   Scenario: Create a Rank List Item

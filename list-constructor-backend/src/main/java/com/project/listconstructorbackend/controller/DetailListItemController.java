@@ -1,5 +1,6 @@
 package com.project.listconstructorbackend.controller;
 
+import com.project.listconstructorbackend.exception.InvalidPayloadException;
 import com.project.listconstructorbackend.exception.ResourceNotFoundException;
 import com.project.listconstructorbackend.model.DetailListItem;
 import com.project.listconstructorbackend.service.DetailListItemService;
@@ -23,13 +24,13 @@ public class DetailListItemController {
 
     @PostMapping
     public DetailListItem createDetailListItem(@RequestBody DetailListItem detailListItem)
-            throws ResourceNotFoundException {
+            throws InvalidPayloadException, ResourceNotFoundException {
         return detailListItemService.create(detailListItem);
     }
 
     @PostMapping("/batch")
     public List<DetailListItem> createDetailListItems(@RequestBody List<DetailListItem> detailListItems)
-            throws ResourceNotFoundException {
+            throws InvalidPayloadException, ResourceNotFoundException {
         return detailListItemService.createMultiple(detailListItems);
     }
 

@@ -47,3 +47,40 @@ Feature: List API Expected Errors
       | Test List 01DE | Test list 01 for list deletion error test | RANK |
       | Test List 02DE | Test list 02 for list deletion error test | RANK |
     And I should purge the test lists from the database
+
+  Scenario: Update List Order With the Wrong Number of Ids
+    Given lists exist with the following details
+      | name           | description                             | type  |
+      | Test List 01UO | Test list 01 for list update order test | CHECK |
+      | Test List 02UO | Test list 02 for list update order test | RANK  |
+    And I get all list ids in order
+    And I remove the last list id
+    When I send an update list order request with that order
+    Then I should get a bad request error with the following message and message details
+      | message                                                                                    |
+      | Cannot update order because number of ids provided does not match current number of lists. |
+    When I get all lists
+    Then I should get no error
+    And I should get the following lists in order with the following details
+      | name           | description                             | type  |
+      | Test List 01UO | Test list 01 for list update order test | CHECK |
+      | Test List 02UO | Test list 02 for list update order test | RANK  |
+    And I should purge the test lists from the database
+
+  Scenario: Update List Order With an Invalid Id
+    Given lists exist with the following details
+      | name           | description                             | type  |
+      | Test List 03UO | Test list 03 for list update order test | CHECK |
+      | Test List 04UO | Test list 04 for list update order test | RANK  |
+    And I get all list ids in order
+    And I remove the last list id
+    And I add a randomly generated list id to the end
+    When I send an update list order request with that order
+    Then I should get a resource not found by list id error
+    When I get all lists
+    Then I should get no error
+    And I should get the following lists in order with the following details
+      | name           | description                             | type  |
+      | Test List 03UO | Test list 03 for list update order test | CHECK |
+      | Test List 04UO | Test list 04 for list update order test | RANK  |
+    And I should purge the test lists from the database

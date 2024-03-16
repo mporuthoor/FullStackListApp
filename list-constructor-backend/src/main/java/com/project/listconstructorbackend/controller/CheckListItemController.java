@@ -1,5 +1,6 @@
 package com.project.listconstructorbackend.controller;
 
+import com.project.listconstructorbackend.exception.InvalidPayloadException;
 import com.project.listconstructorbackend.exception.ResourceNotFoundException;
 import com.project.listconstructorbackend.model.CheckListItem;
 import com.project.listconstructorbackend.service.CheckListItemService;
@@ -23,13 +24,13 @@ public class CheckListItemController {
 
     @PostMapping
     public CheckListItem createCheckListItem(@RequestBody CheckListItem checkListItem)
-            throws ResourceNotFoundException {
+            throws InvalidPayloadException, ResourceNotFoundException {
         return checkListItemService.create(checkListItem);
     }
 
     @PostMapping("/batch")
     public List<CheckListItem> createCheckListItems(@RequestBody List<CheckListItem> checkListItems)
-            throws ResourceNotFoundException {
+            throws InvalidPayloadException, ResourceNotFoundException {
         return checkListItemService.createMultiple(checkListItems);
     }
 

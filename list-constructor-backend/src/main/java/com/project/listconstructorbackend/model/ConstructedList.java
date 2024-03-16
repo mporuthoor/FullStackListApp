@@ -25,7 +25,6 @@ public class ConstructedList extends BaseEntity {
     @NotNull
     private ConstructedListType type;
 
-    // all updates to item ids should be handled by list item services
     @Column(name = "item_ids")
     private List<UUID> itemIds = new ArrayList<>();
 

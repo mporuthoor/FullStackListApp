@@ -2,28 +2,20 @@ package com.project.listconstructorbackend.steps;
 
 import com.project.listconstructorbackend.client.RestClient;
 import com.project.listconstructorbackend.model.CheckListItem;
-import com.project.listconstructorbackend.repository.CheckListItemRepository;
 import com.project.listconstructorbackend.service.CheckListItemService;
-import com.project.listconstructorbackend.steps.common.CommonRepositoryHelper;
+import com.project.listconstructorbackend.steps.common.ListItemServiceHelper;
 import com.project.listconstructorbackend.steps.common.EntityValidator;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 import java.util.List;
 
-public class CheckListItemRepositorySteps {
+public class CheckListItemServiceSteps {
 
-    private final CommonRepositoryHelper<CheckListItem> helper;
+    private final ListItemServiceHelper<CheckListItem> helper;
 
-    private final CheckListItemService checkListItemService;
-
-    public CheckListItemRepositorySteps(
-            CheckListItemRepository repository,
-            RestClient client,
-            CheckListItemService service) {
-
-        checkListItemService = service;
-        helper = new CommonRepositoryHelper<>(repository, client);
+    public CheckListItemServiceSteps(CheckListItemService service, RestClient client) {
+        helper = new ListItemServiceHelper<>(service, client);
     }
 
     @Given("no check list item exists with name {string}")
@@ -38,7 +30,7 @@ public class CheckListItemRepositorySteps {
 
     @Given("check list items exist with that list id and the following details")
     public void checkListItemsExistWithDetails(List<CheckListItem> items) {
-        helper.listItemsExistWithDetails(items, checkListItemService);
+        helper.listItemsExistWithDetails(items);
     }
 
     @Then("check list items should exist with the following details")

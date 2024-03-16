@@ -20,7 +20,7 @@ public interface ListItemService<T extends ListItemEntity> extends BaseService<T
 
     ListRepository getListRepository();
 
-    default T create(T listItem) throws ResourceNotFoundException {
+    default T create(T listItem) throws InvalidPayloadException, ResourceNotFoundException {
         UUID listId = listItem.getListId();
         if (listId == null) {
             throw new InvalidPayloadException(LIST_ID_NULL);
@@ -36,7 +36,7 @@ public interface ListItemService<T extends ListItemEntity> extends BaseService<T
         return savedItem;
     }
 
-    default List<T> createMultiple(List<T> listItems) throws ResourceNotFoundException {
+    default List<T> createMultiple(List<T> listItems) throws InvalidPayloadException, ResourceNotFoundException {
         HashMap<UUID, ConstructedList> idToListMap = new HashMap<>();
         for (T listItem: listItems) {
             UUID listId = listItem.getListId();
@@ -61,19 +61,23 @@ public interface ListItemService<T extends ListItemEntity> extends BaseService<T
         return savedItems;
     }
 
-    default List<T> getItemsByListId(UUID listId) {
+    default List<T> getItemsByListId(UUID listId) throws ResourceNotFoundException {
         getListRepository().findById(listId)
                 .orElseThrow(() -> new ResourceNotFoundException(CANNOT_GET_ITEMS_LIST_NOT_FOUND + listId));
 
         return ((ListItemRepository<T>) getRepository()).findItemsByListId(listId);
     }
 
+    default List<T> getAll() {
+        return getRepository().findAll();
+    }
+
     default Optional<T> update(T listItem) {
-        Optional<T> savedItem = getRepository().findById(listItem.getId());
+        Optional<T> saved = getRepository().findById(listItem.getId());
 
         // don't update saved ids
-        return savedItem.map(item -> {
-            listItem.setListId(item.getListId());
+        return saved.map(savedItem -> {
+            listItem.setListId(savedItem.getListId());
 
             return getRepository().save(listItem);
         });

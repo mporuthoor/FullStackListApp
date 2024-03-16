@@ -3,6 +3,7 @@ package com.project.listconstructorbackend.steps;
 import com.project.listconstructorbackend.client.RestClient;
 import com.project.listconstructorbackend.model.ConstructedList;
 import com.project.listconstructorbackend.model.ConstructedListType;
+import com.project.listconstructorbackend.model.ListOrder;
 import com.project.listconstructorbackend.steps.common.CommonUtility;
 import com.project.listconstructorbackend.steps.common.EntityValidator;
 import io.cucumber.java.DataTableType;
@@ -10,13 +11,20 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 @RequiredArgsConstructor
 public class ListSteps {
 
     private static final String LIST_URL = "http://localhost:8080/api/v1/lists";
+
+    private static final String LIST_ORDER_URL = "http://localhost:8080/api/v1/listOrder";
 
     private final RestClient restClient;
 
@@ -35,7 +43,7 @@ public class ListSteps {
 
     @When("I get the id of list {string}")
     public void getListIdByName(String name) {
-        restClient.getObjectIdByName(LIST_URL, name, ConstructedList.class);
+        restClient.getEntityIdByName(LIST_URL, name, ConstructedList.class);
     }
 
     @When("I get the list with that id")
@@ -58,19 +66,51 @@ public class ListSteps {
         restClient.deleteByIdRequest(LIST_URL);
     }
 
+    @When("I get all list ids in order")
+    public void saveAllListIds() {
+        restClient.saveListIds(LIST_URL);
+    }
+
+    @When("I change the order to reverse the last {int} lists")
+    public void updateListOrder(int num) {
+        int end = restClient.getListIds().size();
+        int mid = end - num;
+        List<UUID> updatedOrder = restClient.getListIds().subList(0, mid);
+        updatedOrder.addAll(restClient.getListIds().subList(mid, end).reversed());
+
+        restClient.setListIds(updatedOrder);
+    }
+
+    @When("I send an update list order request with that order")
+    public void sendUpdateOrderRequest() {
+        restClient.updateOrderRequest(LIST_ORDER_URL, restClient.getListIds());
+    }
+
     @Then("I should get a list with the following details")
     public void shouldGetListWithDetails(ConstructedList expected) {
         ConstructedList actual =
                 CommonUtility.getObjectFromResponseBody(restClient.getResponse(), ConstructedList.class);
+
         EntityValidator.validateList(expected, actual);
     }
 
-    @Then("I should get lists with the following details")
+    @Then("I should get the following lists in order with the following details")
     public void shouldGetListsWithDetails(List<ConstructedList> expectedLists) {
         List<ConstructedList> actualLists =
                 CommonUtility.getListFromResponseBody(restClient.getResponse(), ConstructedList.class);
+        int start = actualLists.size() - expectedLists.size();
+        int end = actualLists.size();
+        actualLists = actualLists.subList(start, end);
 
-        EntityValidator.validateEntityLists(expectedLists, actualLists, EntityValidator::validateList);
+        EntityValidator.validateOrderedEntityLists(expectedLists, actualLists, EntityValidator::validateList);
+    }
+
+    @Then("I should get list ids in the updated order")
+    public void shouldGetListIdsInUpdatedOrder() {
+        List<UUID> actualList = CommonUtility.getListFromResponseBody(restClient.getResponse(), ListOrder.class)
+                .stream().map(ListOrder::getListId).collect(Collectors.toCollection(ArrayList::new));
+
+        assertIterableEquals(restClient.getListIds(), actualList);
     }
 
 }

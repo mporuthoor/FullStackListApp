@@ -2,28 +2,20 @@ package com.project.listconstructorbackend.steps;
 
 import com.project.listconstructorbackend.client.RestClient;
 import com.project.listconstructorbackend.model.DetailListItem;
-import com.project.listconstructorbackend.repository.DetailListItemRepository;
 import com.project.listconstructorbackend.service.DetailListItemService;
-import com.project.listconstructorbackend.steps.common.CommonRepositoryHelper;
+import com.project.listconstructorbackend.steps.common.ListItemServiceHelper;
 import com.project.listconstructorbackend.steps.common.EntityValidator;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 import java.util.List;
 
-public class DetailListItemRepositorySteps {
+public class DetailListItemServiceSteps {
 
-    private final CommonRepositoryHelper<DetailListItem> helper;
+    private final ListItemServiceHelper<DetailListItem> helper;
 
-    private final DetailListItemService detailListItemService;
-
-    public DetailListItemRepositorySteps(
-            DetailListItemRepository repository,
-            RestClient client,
-            DetailListItemService service) {
-
-        detailListItemService = service;
-        helper = new CommonRepositoryHelper<>(repository, client);
+    public DetailListItemServiceSteps(DetailListItemService service, RestClient client) {
+        helper = new ListItemServiceHelper<>(service, client);
     }
 
     @Given("no detail list item exists with name {string}")
@@ -38,7 +30,7 @@ public class DetailListItemRepositorySteps {
 
     @Given("detail list items exist with that list id and the following details")
     public void detailListItemsExistWithDetails(List<DetailListItem> items) {
-        helper.listItemsExistWithDetails(items, detailListItemService);
+        helper.listItemsExistWithDetails(items);
     }
 
     @Then("detail list items should exist with the following details")

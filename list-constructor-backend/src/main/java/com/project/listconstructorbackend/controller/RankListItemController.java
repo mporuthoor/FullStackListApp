@@ -1,5 +1,6 @@
 package com.project.listconstructorbackend.controller;
 
+import com.project.listconstructorbackend.exception.InvalidPayloadException;
 import com.project.listconstructorbackend.exception.ResourceNotFoundException;
 import com.project.listconstructorbackend.model.RankListItem;
 import com.project.listconstructorbackend.service.RankListItemService;
@@ -23,13 +24,13 @@ public class RankListItemController {
 
     @PostMapping
     public RankListItem createRankListItem(@RequestBody RankListItem rankListItem)
-            throws ResourceNotFoundException {
+            throws InvalidPayloadException, ResourceNotFoundException {
         return rankListItemService.create(rankListItem);
     }
 
     @PostMapping("/batch")
     public List<RankListItem> createRankListItems(@RequestBody List<RankListItem> rankListItems)
-            throws ResourceNotFoundException {
+            throws InvalidPayloadException, ResourceNotFoundException {
         return rankListItemService.createMultiple(rankListItems);
     }
 

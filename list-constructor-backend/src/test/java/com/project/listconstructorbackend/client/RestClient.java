@@ -1,6 +1,7 @@
 package com.project.listconstructorbackend.client;
 
 import com.project.listconstructorbackend.model.BaseEntity;
+import com.project.listconstructorbackend.model.ConstructedList;
 import com.project.listconstructorbackend.steps.common.CommonUtility;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -11,9 +12,11 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,6 +33,8 @@ public class RestClient {
     private UUID id;
 
     private UUID listId;
+
+    private List<UUID> listIds;
 
     private RequestSpecification getRequestSpecification() {
 
@@ -66,18 +71,28 @@ public class RestClient {
         response = getRequestSpecification().body(body).put(url + "/" + id);
     }
 
+    public void updateOrderRequest(String url, List<UUID> body) {
+        response = getRequestSpecification().body(body).put(url);
+    }
+
     public void deleteByIdRequest(String url) {
         response = getRequestSpecification().delete(url + "/" + id);
     }
 
-    public <T extends BaseEntity> void getObjectIdByName(String url, String name, Class<T> entityClass) {
+    public <T extends BaseEntity> void getEntityIdByName(String url, String name, Class<T> entityClass) {
         getAllRequest(url);
-        Optional<T> savedList = CommonUtility.findByName(
+        Optional<T> savedEntity = CommonUtility.findByName(
                 name,
                 CommonUtility.getListFromResponseBody(response, entityClass));
 
-        assertTrue(savedList.isPresent());
-        id = savedList.get().getId();
+        assertTrue(savedEntity.isPresent());
+        id = savedEntity.get().getId();
+    }
+
+    public void saveListIds(String url) {
+        getAllRequest(url);
+        listIds = CommonUtility.getListFromResponseBody(response, ConstructedList.class).stream()
+                .map(ConstructedList::getId).collect(Collectors.toCollection(ArrayList::new));
     }
 
 }

@@ -49,6 +49,23 @@ public class ErrorSteps {
         restClient.setListId(UUID.randomUUID());
     }
 
+    @Given("I remove the last list id")
+    public void removeLastListId() {
+        int end = restClient.getListIds().size() - 1;
+
+        restClient.setListIds(restClient.getListIds().subList(0, end));
+    }
+
+    @Given("I add a randomly generated list id to the end")
+    public void addRandomListIdToEnd() {
+        List<UUID> updateIds = restClient.getListIds();
+        UUID newId = UUID.randomUUID();
+        updateIds.add(newId);
+
+        restClient.setListIds(restClient.getListIds());
+        restClient.setListId(newId);
+    }
+
     @Then("I should get no error")
     public void shouldGetNoError() {
         assertEquals(200, restClient.getResponse().getStatusCode());

@@ -38,7 +38,7 @@ Feature: List API CRUD Operations
       | Test List 08R | Test list 08 for list reading test | DETAIL |
     When I get all lists
     Then I should get no error
-    And I should get lists with the following details
+    And I should get the following lists in order with the following details
       | name          | description                        | type   |
       | Test List 05R | Test list 05 for list reading test | CHECK  |
       | Test List 06R | Test list 06 for list reading test | RANK   |
@@ -85,4 +85,26 @@ Feature: List API CRUD Operations
       | Test List 03D | Test list 03 for list deletion test | DETAIL |
       | Test List 04D | Test list 04 for list deletion test | RANK   |
     And no list should exist with name "Test List 01D"
+    And I should purge the test lists from the database
+
+  Scenario: Update List Order
+    Given lists exist with the following details
+      | name           | description                             | type   |
+      | Test List 01UO | Test list 01 for list update order test | CHECK  |
+      | Test List 02UO | Test list 02 for list update order test | RANK   |
+      | Test List 03UO | Test list 03 for list update order test | DETAIL |
+      | Test List 04UO | Test list 04 for list update order test | RANK   |
+    And I get all list ids in order
+    And I change the order to reverse the last 4 lists
+    When I send an update list order request with that order
+    Then I should get no error
+    And I should get list ids in the updated order
+    When I get all lists
+    Then I should get no error
+    And I should get the following lists in order with the following details
+      | name           | description                             | type   |
+      | Test List 04UO | Test list 04 for list update order test | RANK   |
+      | Test List 03UO | Test list 03 for list update order test | DETAIL |
+      | Test List 02UO | Test list 02 for list update order test | RANK   |
+      | Test List 01UO | Test list 01 for list update order test | CHECK  |
     And I should purge the test lists from the database

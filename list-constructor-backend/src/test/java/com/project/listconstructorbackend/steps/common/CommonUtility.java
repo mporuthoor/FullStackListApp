@@ -36,7 +36,7 @@ public class CommonUtility {
         return response.body().as(entityClass);
     }
 
-    public static <T extends BaseEntity> List<T> getListFromResponseBody(Response response, Class<T> entityClass) {
+    public static <T> List<T> getListFromResponseBody(Response response, Class<T> entityClass) {
         return response.body().jsonPath().getList("", entityClass);
     }
 

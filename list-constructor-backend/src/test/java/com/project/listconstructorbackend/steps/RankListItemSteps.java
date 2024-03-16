@@ -42,7 +42,7 @@ public class RankListItemSteps {
 
     @When("I get the id of rank list item {string}")
     public void getRankListItemIdByName(String name) {
-        restClient.getObjectIdByName(RANK_LIST_ITEM_URL, name, RankListItem.class);
+        restClient.getEntityIdByName(RANK_LIST_ITEM_URL, name, RankListItem.class);
     }
 
     @When("I get the rank list item with that id")

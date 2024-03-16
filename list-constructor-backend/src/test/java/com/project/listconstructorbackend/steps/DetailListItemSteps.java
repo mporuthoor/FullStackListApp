@@ -46,7 +46,7 @@ public class DetailListItemSteps {
 
     @When("I get the id of detail list item {string}")
     public void getDetailListItemIdByName(String name) {
-        restClient.getObjectIdByName(DETAIL_LIST_ITEM_URL, name, DetailListItem.class);
+        restClient.getEntityIdByName(DETAIL_LIST_ITEM_URL, name, DetailListItem.class);
     }
 
     @When("I get the detail list item with that id")

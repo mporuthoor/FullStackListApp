@@ -11,12 +11,16 @@ public interface BaseService<T extends BaseEntity> {
 
     BaseRepository<T> getRepository();
 
+    T create(T entity);
+
+    List<T> getAll();
+
+    Optional<T> update(T entity);
+
+    boolean delete(UUID id);
+
     default Optional<T> getById(UUID id) {
         return getRepository().findById(id);
-    }
-
-    default List<T> getAll() {
-        return getRepository().findAll();
     }
 
 }

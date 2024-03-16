@@ -2,19 +2,19 @@ package com.project.listconstructorbackend.steps;
 
 import com.project.listconstructorbackend.client.RestClient;
 import com.project.listconstructorbackend.model.ConstructedList;
-import com.project.listconstructorbackend.repository.ListRepository;
-import com.project.listconstructorbackend.steps.common.CommonRepositoryHelper;
+import com.project.listconstructorbackend.service.ListService;
+import com.project.listconstructorbackend.steps.common.ListServiceHelper;
 import com.project.listconstructorbackend.steps.common.EntityValidator;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 import java.util.List;
 
-public class ListRepositorySteps {
-    private final CommonRepositoryHelper<ConstructedList> helper;
+public class ListServiceSteps {
+    private final ListServiceHelper helper;
 
-    public ListRepositorySteps(ListRepository repository, RestClient client) {
-        helper = new CommonRepositoryHelper<>(repository, client);
+    public ListServiceSteps(ListService service, RestClient client) {
+        helper = new ListServiceHelper(service, client);
     }
 
     @Given("no list exists with name {string}")

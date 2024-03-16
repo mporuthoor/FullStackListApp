@@ -2,28 +2,20 @@ package com.project.listconstructorbackend.steps;
 
 import com.project.listconstructorbackend.client.RestClient;
 import com.project.listconstructorbackend.model.RankListItem;
-import com.project.listconstructorbackend.repository.RankListItemRepository;
 import com.project.listconstructorbackend.service.RankListItemService;
-import com.project.listconstructorbackend.steps.common.CommonRepositoryHelper;
+import com.project.listconstructorbackend.steps.common.ListItemServiceHelper;
 import com.project.listconstructorbackend.steps.common.EntityValidator;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 import java.util.List;
 
-public class RankListItemRepositorySteps {
+public class RankListItemServiceSteps {
 
-    private final CommonRepositoryHelper<RankListItem> helper;
+    private final ListItemServiceHelper<RankListItem> helper;
 
-    private final RankListItemService rankListItemService;
-
-    public RankListItemRepositorySteps(
-            RankListItemRepository repository,
-            RestClient client,
-            RankListItemService service) {
-
-        rankListItemService = service;
-        helper = new CommonRepositoryHelper<>(repository, client);
+    public RankListItemServiceSteps(RankListItemService service, RestClient client) {
+        helper = new ListItemServiceHelper<>(service, client);
     }
 
     @Given("no rank list item exists with name {string}")
@@ -38,7 +30,7 @@ public class RankListItemRepositorySteps {
 
     @Given("rank list items exist with that list id and the following details")
     public void rankListItemsExistWithDetails(List<RankListItem> items) {
-        helper.listItemsExistWithDetails(items, rankListItemService);
+        helper.listItemsExistWithDetails(items);
     }
 
     @Then("rank list items should exist with the following details")

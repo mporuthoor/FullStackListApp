@@ -68,6 +68,18 @@ public class EntityValidator {
         validateEntityLists(expectedList, actualList, function);
     }
 
+    public static <T extends BaseEntity> void validateOrderedEntityLists(
+            List<T> expectedList,
+            List<T> actualList,
+            BiConsumer<T, T> function) {
+
+        assertEquals(expectedList.size(), actualList.size());
+
+        for (int i = 0; i < expectedList.size(); i++) {
+            function.accept(expectedList.get(i), actualList.get(i));
+        }
+    }
+
     public static void validateDetailedErrorData(DetailedErrorInfo errorInfo, Response response) {
         String message = CommonUtility.getErrorMessage(response);
         List<String> details = response.body().jsonPath().getList("messageDetails");

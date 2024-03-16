@@ -40,7 +40,7 @@ public class CheckListItemSteps {
 
     @When("I get the id of check list item {string}")
     public void getCheckListItemIdByName(String name) {
-        restClient.getObjectIdByName(CHECK_LIST_ITEM_URL, name, CheckListItem.class);
+        restClient.getEntityIdByName(CHECK_LIST_ITEM_URL, name, CheckListItem.class);
     }
 
     @When("I get the check list item with that id")

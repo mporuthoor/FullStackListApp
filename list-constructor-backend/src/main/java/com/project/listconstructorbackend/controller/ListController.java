@@ -23,7 +23,7 @@ public class ListController {
 
     @PostMapping
     public ConstructedList createList(@RequestBody ConstructedList list) {
-        return this.listService.create(list);
+        return listService.create(list);
     }
 
     @GetMapping("/{id}")
@@ -36,7 +36,7 @@ public class ListController {
 
     @GetMapping("/all")
     public List<ConstructedList> getAllLists() {
-        return this.listService.getAll();
+        return listService.getAll();
     }
 
     @PutMapping("/{id}")
@@ -47,7 +47,7 @@ public class ListController {
 
         list.setId(id);
 
-        return this.listService.update(list).map(ResponseEntity::ok)
+        return listService.update(list).map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException(LIST_NOT_FOUND_ID + id));
     }
 
@@ -55,7 +55,7 @@ public class ListController {
     public ResponseEntity<String> deleteList(@PathVariable(value = "id") UUID id)
             throws ResourceNotFoundException {
 
-        if (this.listService.delete(id)) {
+        if (listService.delete(id)) {
             return ResponseEntity.ok(LIST_DELETED_ID + id);
         }
 
