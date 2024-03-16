@@ -103,7 +103,7 @@
           "name": "GET All CheckListItems",
           "seq": 5,
           "request": {
-            "url": "http://localhost:8080/api/v1/checkListItems",
+            "url": "http://localhost:8080/api/v1/checkListItems/all",
             "method": "GET",
             "headers": [],
             "body": {
@@ -322,7 +322,7 @@
           "name": "GET All DetailListItems",
           "seq": 5,
           "request": {
-            "url": "http://localhost:8080/api/v1/detailListItems",
+            "url": "http://localhost:8080/api/v1/detailListItems/all",
             "method": "GET",
             "headers": [],
             "body": {
@@ -418,6 +418,195 @@
             "body": {
               "mode": "json",
               "json": "{\n  \"name\": \"Detail List Item 1\",\n  \"description\": \"Detail List Item 1\",\n  \"details\": [\"Detail1\", \"Detail2\", \"Details3\"]\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "query": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "List",
+      "items": [
+        {
+          "type": "http",
+          "name": "CREATE List",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:8080/api/v1/lists",
+            "method": "POST",
+            "headers": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": \"CHECK\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "DELETE List by Id",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:8080/api/v1/lists/{id}",
+            "method": "DELETE",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "GET All Lists",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:8080/api/v1/lists/all",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "GET List by Id",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:8080/api/v1/lists/{id}",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "UPDATE List by Id",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:8080/api/v1/lists/{id}",
+            "method": "PUT",
+            "headers": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": \"DETAIL\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "UPDATE List Order",
+          "seq": 6,
+          "request": {
+            "url": "http://localhost:8080/api/v1/listOrder",
+            "method": "PUT",
+            "headers": [],
+            "body": {
+              "mode": "json",
+              "json": "[\"listId1\", \"listId2\", \"listId3\"]",
               "formUrlEncoded": [],
               "multipartForm": []
             },
@@ -541,7 +730,7 @@
           "name": "GET All RankListItems",
           "seq": 5,
           "request": {
-            "url": "http://localhost:8080/api/v1/rankListItems",
+            "url": "http://localhost:8080/api/v1/rankListItems/all",
             "method": "GET",
             "headers": [],
             "body": {
@@ -637,164 +826,6 @@
             "body": {
               "mode": "json",
               "json": "{\n  \"name\": \"Rank Item 1\",\n  \"description\": \"Rank List Item 1\",\n  \"rank\": 2\n}",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "auth": {
-              "mode": "none",
-              "basic": {
-                "username": "",
-                "password": ""
-              },
-              "bearer": {
-                "token": ""
-              }
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "query": []
-          }
-        }
-      ]
-    },
-    {
-      "type": "folder",
-      "name": "List",
-      "items": [
-        {
-          "type": "http",
-          "name": "CREATE List",
-          "seq": 1,
-          "request": {
-            "url": "http://localhost:8080/api/v1/lists",
-            "method": "POST",
-            "headers": [],
-            "body": {
-              "mode": "json",
-              "json": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": \"CHECK\"\n}",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "auth": {
-              "mode": "none",
-              "basic": {
-                "username": "",
-                "password": ""
-              },
-              "bearer": {
-                "token": ""
-              }
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "query": []
-          }
-        },
-        {
-          "type": "http",
-          "name": "DELETE List by Id",
-          "seq": 5,
-          "request": {
-            "url": "http://localhost:8080/api/v1/lists/{id}",
-            "method": "DELETE",
-            "headers": [],
-            "body": {
-              "mode": "none",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "auth": {
-              "mode": "none",
-              "basic": {
-                "username": "",
-                "password": ""
-              },
-              "bearer": {
-                "token": ""
-              }
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "query": []
-          }
-        },
-        {
-          "type": "http",
-          "name": "GET All Lists",
-          "seq": 3,
-          "request": {
-            "url": "http://localhost:8080/api/v1/lists",
-            "method": "GET",
-            "headers": [],
-            "body": {
-              "mode": "none",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "auth": {
-              "mode": "none",
-              "basic": {
-                "username": "",
-                "password": ""
-              },
-              "bearer": {
-                "token": ""
-              }
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "query": []
-          }
-        },
-        {
-          "type": "http",
-          "name": "GET List by Id",
-          "seq": 2,
-          "request": {
-            "url": "http://localhost:8080/api/v1/lists/{id}",
-            "method": "GET",
-            "headers": [],
-            "body": {
-              "mode": "none",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "auth": {
-              "mode": "none",
-              "basic": {
-                "username": "",
-                "password": ""
-              },
-              "bearer": {
-                "token": ""
-              }
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "query": []
-          }
-        },
-        {
-          "type": "http",
-          "name": "UPDATE List by Id",
-          "seq": 4,
-          "request": {
-            "url": "http://localhost:8080/api/v1/lists/{id}",
-            "method": "PUT",
-            "headers": [],
-            "body": {
-              "mode": "json",
-              "json": "{\n  \"name\": \"List 1\",\n  \"description\": \"Constructed List Number 1\",\n  \"type\": \"DETAIL\"\n}",
               "formUrlEncoded": [],
               "multipartForm": []
             },
