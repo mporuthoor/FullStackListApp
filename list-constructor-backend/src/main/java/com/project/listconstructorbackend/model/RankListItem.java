@@ -22,15 +22,6 @@ public class RankListItem extends ListItemEntity {
 
     public RankListItem(
             @NotNull String name,
-            @NotNull UUID listId,
-            int rank) {
-
-        super(name, listId);
-        this.rank = rank;
-    }
-
-    public RankListItem(
-            @NotNull String name,
             String description,
             @NotNull UUID listId,
             int rank) {

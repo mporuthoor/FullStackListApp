@@ -28,11 +28,6 @@ public class ConstructedList extends BaseEntity {
     @Column(name = "item_ids")
     private List<UUID> itemIds = new ArrayList<>();
 
-    public ConstructedList(@NotNull String name, @NotNull ConstructedListType type) {
-        super(name);
-        this.type = type;
-    }
-
     public ConstructedList(@NotNull String name, String description, @NotNull ConstructedListType type) {
         super(name, description);
         this.type = type;

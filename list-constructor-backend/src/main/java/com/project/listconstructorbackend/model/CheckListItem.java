@@ -22,15 +22,6 @@ public class CheckListItem extends ListItemEntity {
 
     public CheckListItem(
             @NotNull String name,
-            @NotNull UUID listId,
-            boolean checked) {
-
-        super(name, listId);
-        this.checked = checked;
-    }
-
-    public CheckListItem(
-            @NotNull String name,
             String description,
             @NotNull UUID listId,
             boolean checked) {

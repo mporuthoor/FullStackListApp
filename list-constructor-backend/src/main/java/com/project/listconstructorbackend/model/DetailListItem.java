@@ -24,15 +24,6 @@ public class DetailListItem extends ListItemEntity {
 
     public DetailListItem(
             @NotNull String name,
-            @NotNull UUID listId,
-            @NotNull List<String> details) {
-
-        super(name, listId);
-        this.details = details;
-    }
-
-    public DetailListItem(
-            @NotNull String name,
             String description,
             @NotNull UUID listId,
             @NotNull List<String> details) {
