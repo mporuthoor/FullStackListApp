@@ -1,5 +1,6 @@
 package com.project.listconstructorbackend.controller;
 
+import com.google.gson.Gson;
 import com.project.listconstructorbackend.exception.InvalidPayloadException;
 import com.project.listconstructorbackend.exception.ResourceNotFoundException;
 import com.project.listconstructorbackend.model.RankListItem;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/rankListItems")
+@RequestMapping("/rankListItems")
 public class RankListItemController {
 
     private static final String RANK_LIST_ITEM_NOT_FOUND_ID = "Rank list item not found with id: ";
@@ -71,7 +72,7 @@ public class RankListItemController {
             throws ResourceNotFoundException {
 
         if (rankListItemService.delete(id)) {
-            return ResponseEntity.ok(RANK_LIST_ITEM_DELETED_ID + id);
+            return ResponseEntity.ok((new Gson()).toJson(RANK_LIST_ITEM_DELETED_ID + id));
         }
 
         throw new ResourceNotFoundException(RANK_LIST_ITEM_NOT_FOUND_ID + id);

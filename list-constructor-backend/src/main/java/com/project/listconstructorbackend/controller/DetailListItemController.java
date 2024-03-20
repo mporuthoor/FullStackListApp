@@ -1,5 +1,6 @@
 package com.project.listconstructorbackend.controller;
 
+import com.google.gson.Gson;
 import com.project.listconstructorbackend.exception.InvalidPayloadException;
 import com.project.listconstructorbackend.exception.ResourceNotFoundException;
 import com.project.listconstructorbackend.model.DetailListItem;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/detailListItems")
+@RequestMapping("/detailListItems")
 public class DetailListItemController {
 
     private static final String DETAIL_LIST_ITEM_NOT_FOUND_ID = "Detail list item not found with id: ";
@@ -70,7 +71,7 @@ public class DetailListItemController {
             throws ResourceNotFoundException {
 
         if (detailListItemService.delete(id)) {
-            return ResponseEntity.ok(DETAIL_LIST_ITEM_DELETED_ID + id);
+            return ResponseEntity.ok((new Gson()).toJson(DETAIL_LIST_ITEM_DELETED_ID + id));
         }
 
         throw new ResourceNotFoundException(DETAIL_LIST_ITEM_NOT_FOUND_ID + id);

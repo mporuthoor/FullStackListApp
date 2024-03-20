@@ -1,5 +1,6 @@
 package com.project.listconstructorbackend.controller;
 
+import com.google.gson.Gson;
 import com.project.listconstructorbackend.exception.ResourceNotFoundException;
 import com.project.listconstructorbackend.model.ConstructedList;
 import com.project.listconstructorbackend.service.ListService;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/lists")
+@RequestMapping("/lists")
 public class ListController {
 
     private static final String LIST_NOT_FOUND_ID = "List not found with id: ";
@@ -56,7 +57,7 @@ public class ListController {
             throws ResourceNotFoundException {
 
         if (listService.delete(id)) {
-            return ResponseEntity.ok(LIST_DELETED_ID + id);
+            return ResponseEntity.ok((new Gson()).toJson(LIST_DELETED_ID + id));
         }
 
         throw new ResourceNotFoundException(LIST_NOT_FOUND_ID + id);

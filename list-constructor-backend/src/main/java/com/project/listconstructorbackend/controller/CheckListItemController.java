@@ -1,5 +1,6 @@
 package com.project.listconstructorbackend.controller;
 
+import com.google.gson.Gson;
 import com.project.listconstructorbackend.exception.InvalidPayloadException;
 import com.project.listconstructorbackend.exception.ResourceNotFoundException;
 import com.project.listconstructorbackend.model.CheckListItem;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/checkListItems")
+@RequestMapping("/checkListItems")
 public class CheckListItemController {
 
     private static final String CHECK_LIST_ITEM_NOT_FOUND_ID = "Check list item not found with id: ";
@@ -70,7 +71,7 @@ public class CheckListItemController {
             throws ResourceNotFoundException {
 
         if (checkListItemService.delete(id)) {
-            return ResponseEntity.ok(CHECK_LIST_ITEM_DELETED_ID + id);
+            return ResponseEntity.ok((new Gson()).toJson(CHECK_LIST_ITEM_DELETED_ID + id));
         }
 
         throw new ResourceNotFoundException(CHECK_LIST_ITEM_NOT_FOUND_ID + id);
