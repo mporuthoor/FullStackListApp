@@ -1,18 +1,18 @@
-import { UUID } from "crypto";
-import { BaseEntity } from "./ListModels";
+import { UUID } from 'crypto';
+import { BaseEntity } from './ListModels';
 
 export interface ListItemEntity extends BaseEntity {
-    listId: UUID;
+  listId: UUID;
 }
 
 export interface CheckListItem extends ListItemEntity {
-    checked: boolean;
+  checked: boolean;
 }
 
 export interface DetailListItem extends ListItemEntity {
-    details: string[];
+  details: string[];
 }
 
 export interface RankListItem extends ListItemEntity {
-    rank: number;
+  rank: number;
 }
